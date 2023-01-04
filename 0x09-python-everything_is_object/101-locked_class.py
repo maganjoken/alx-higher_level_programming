@@ -1,15 +1,8 @@
 #!/usr/bin/python3
-"""
-LockedClass
-"""
-
-
 class LockedClass:
-    """ No class or object attributes, can't set
-        Except for first_name
-    """
-    def __setattr__(self, attribute, value):
-        if attribute == "first_name":
-            self.__dict__[attribute] = value
+    def __setattr__(self, name, value):
+        if name != "first_name":
+            raise AttributeError("You are not allowed to set new attributes on this object")
         else:
-            raise AttributeError("'LockedClass' object has no attribute '" + attribute + "'")
+            self.__dict__[name] = value
+
