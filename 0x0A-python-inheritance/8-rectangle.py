@@ -7,12 +7,17 @@ module with class Rectangle
 ===================================
 """
 
+class BaseGeometry:
+    def integer_validator(self, name, value):
+        if type(value) != int:
+            raise TypeError(name + " must be an integer")
+        if value <= 0:
+            raise ValueError(name + " must be greater than 0")
 
 class Rectangle(BaseGeometry):
-    """Rectangle class that inherits from BaseGeometry"""
-
     def __init__(self, width, height):
-        self.integer_validator("width", width)
         self.__width = width
-        self.integer_validator("height", height)
         self.__height = height
+        super().integer_validator("width", width)
+        super().integer_validator("height", height)
+
