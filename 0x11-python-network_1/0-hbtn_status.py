@@ -1,18 +1,22 @@
 #!/usr/bin/python3
-"""Fetches the URL: https://intranet.hbtn.io/status
+"""Takes in a URL, sends a request to the URL and
+displays the body of the response (decoded in utf-8).
+
+In addition, it handles HTTPError exceptions to print
+the HTTP Status Code, if an error occurs.
 """
 
+from sys import argv
 from urllib.request import Request, urlopen
+from urllib.parse import urlencode
+from urllib.error import HTTPError
 
 
 if __name__ == "__main__":
-    req = Request('https://intranet.hbtn.io/status')
+    req = Request(argv[1])
 
-    with urlopen(req) as res:
-        content = res.read()
-        utf8_content = content.decode('utf-8')
-
-        print('Body response:')
-        print('\t- type: {_type}'.format(_type=type(content)))
-        print('\t- content: {_content}'.format(_content=content))
-        print('\t- utf8 content: {_utf8_c}'.format(_utf8_c=utf8_content))
+    try:
+        with urlopen(req) as res:
+            print(res.read().decode('utf-8'))
+    except HTTPError as ex:
+        print('Error code:', ex.code)
